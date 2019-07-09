@@ -34,3 +34,26 @@ pred_y = neigh.predict(test_x_featurized)
 ## Save results to submission file
 pred_df = pd.DataFrame(pred_y, columns=['label'])
 pred_df.to_csv("knn_sample_submission", index=True, index_label='Id')
+
+
+def predictionGenerator(train_x, train_y, test_x):
+    ## Filtering column "mail_type"
+    train_x = train_x[['mail_type']]
+
+    test_x = test_x[['mail_type']]
+
+    ## Do one hot encoding of categorical feature
+    feat_enc = OneHotEncoder()
+    feat_enc.fit(train_x)
+    train_x_featurized = feat_enc.transform(train_x)
+    test_x_featurized = feat_enc.transform(test_x)
+
+    ## Train a simple KNN classifier using featurized data
+    neigh = KNeighborsClassifier(n_neighbors=3)
+    neigh.fit(train_x_featurized, train_y)
+    pred_y = neigh.predict(test_x_featurized)
+
+    predictions = pd.DataFrame(pred_y, columns=['label'])
+
+    ## Save results to submission file
+    return predictions
