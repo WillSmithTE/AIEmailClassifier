@@ -19,12 +19,10 @@ ORG_CATEGORIES = [ 'gmail', 'news', 'iiitd', 'statebankrewardz', 'shop', 'quora'
 TLD_CATEGORIES = ['ebay.in', 'com', 'net', 'ac.in', 'bookmyshow.com', 'in', 'gov.in', 'fr', 'org', 'frankfurt-airport.news', 'sdconnect.in', 'google.com', 'pinterest.com', 'iitm.ac.in', 'grammarly.com', 'instagram.com', 'efinmail.com', 'surveymonkey.com', 'godaddy.com', 'foodpanda.in', 'co', 'gopro.com', 'lescrous.fr', 'goindigo.in', 'jabong.com', 'intercom-mail.com', 'speakingtree.in', 'paypal.com', 'mil', 'pytorch.org', 'netflix.com', 'asus.com', 'itunes.com', 'linkedin.com', 'bird.co', 'nvidia.com', 'mail.coursera.org', 'co.in', 'hp.com', 'travel-makemytrip.com', 'goodreads.com', 'mathworks.com', 'codeproject.com', 'ibm.com', 'wfp.org', 'payback.in', 'udacity.com', 'mobikwik.com', 'miscota.com', 'evernote.com', 'change.org', 'twitter.com', 'cardekhomailer.com', 'booking.com', 'travel2-makemytrip.com', 'ai', 'digitalglobe.com', 'hosting', 'skype.com', 'oneplus.com', 'tripadvisor.com', 'quoramail.com', 'emails-makemytrip.com', 'vincerowatches.com', 'mail.intercom.io', 'uber.com', 'vnet.ibm.com', 'xoom.com', 'org.in', 'classmates.com', 'cardekho.com', 'today', 'ibmmail.com', 'be', 'Apple.com', 'crazydomains.com', 'hobbyking.com', 'microsoft.com', 'email', 'ieee.org', 'info', 'last.fm', 'prezi.com', 'is', 'stanford.edu', 'ac.in', 'in', 'com', 'fr', 'foodpanda.in', 'org.in', 'ai', 'email', 'intercom-mail.com', 'gov.in', 'bookmyshow.com', 'asus.com', 'ebay.in', 'org', 'speakingtree.in', 'pinterest.com', 'supelec.fr', 'sdconnect.in', 'netflix.com', 'hp.com', 'google.com', 'grammarly.com', 'paypal.com', 'frankfurt-airport.news', 'net', 'orkut.com', 'mail.coursera.org', 'tripadvisor.com', 'bird.co', 'jabong.com', 'itunes.com', 'iiitd.ac.in', 'linkedin.com', 'co', 'godaddy.com', 'edu', 'ieee.org', 'auchan.net', 'goodreads.com', 'pytorch.org', 'co.in', 'cardekho.com', 'evernote.com', 'codeproject.com', 'nvidia.com', 'quoramail.com', 'travel-makemytrip.com', 'goindigo.in', 'udacity.com', 'gopro.com', 'io', 'centralesupelec.fr', 'reliancegeneral.co.in', 'mathworks.com', 'xoom.com', 'ibmmail.com', 'emails-makemytrip.com', 'wfp.org', 'instagram.com', 'classmates.com', 'twitter.com', 'skype.com', 'vincerowatches.com', 'Apple.com', 'asana.com', 'last.fm', 'cardekhomailer.com', 'efinmail.com', 'chtah.com', 'microsoft.com', 'vnet.ibm.com', 'scientific-direct.net', 'miscota.com', 'bitbucket.org', 'ORG', 'iitm.ac.in', 'elitmus.biz', 'booking.com', 'payback.in', 'surveymonkey.com', 'hobbyking.com', 'stanford.edu', 'ibm.com', 'tech', 'be']
 
 def replaceNullsWithMode(fieldName, data):
-	print(data)
 	mode = data[fieldName].mode()[0]
 	data[fieldName].fillna(mode, inplace=True)
 
 def testResults(data):
-	print(data)	
 	
 ## Read csvs
 
@@ -36,8 +34,6 @@ del test_df[DATE_FIELD]
 
 train_x, test_x, train_y, test_y = train_test_split(train_df, train_df[[LABEL_FIELD]], test_size=0.4)
 
-print(train_x[TLD_FIELD].unique().tolist())
-print(test_x[TLD_FIELD].unique().tolist())
 
 replaceNullsWithMode(ORG_FIELD, train_x)
 replaceNullsWithMode(TLD_FIELD, train_x)

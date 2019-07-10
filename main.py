@@ -1,9 +1,11 @@
 import pandas as pd
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
-from tree1 import predictionGenerator
+from MultiLayerPerceptron import predictionGenerator
 from util import LABEL_FIELD, DATE_FIELD, ORG_FIELD, MAIL_TYPE_FIELD, TLD_FIELD, DESIGNATION_FIELD, QUANTITATIVE_FIELD_NAMES, ALL_FIELDS, powerset
 import statistics
+
+categoricalFeatures = [ ORG_FIELD, MAIL_TYPE_FIELD, TLD_FIELD ]
 
 TEST_SIZE = 0.4
 NUM_TESTS = 10
@@ -14,6 +16,35 @@ tests = dict()
 
 train_df = pd.read_csv('train.csv', index_col=0)
 final_df = pd.read_csv('test.csv', index_col=0)
+
+for feature in categoricalFeatures:
+    trainCategories = train_df[feature].unique()
+    mode = final_df[feature].mode()[0]
+    testCategories = final_df[feature].unique()
+    testCategoriesNotInTrain = [ category for category in testCategories if category not in trainCategories ]
+
+    final_df[feature] = final_df[feature].replace(testCategoriesNotInTrain, mode)
+
+def transformDataset(dataSet):
+    del dataSet[DATE_FIELD]
+    dataSet[MAIL_TYPE_FIELD] = dataSet[MAIL_TYPE_FIELD].apply(lambda value: value.lower())
+
+    for feature in categoricalFeatures:
+        dataSet[feature] = pd.Categorical(dataSet[feature])
+        dummies = pd.get_dummies(dataSet[feature], prefix=feature, columns=train_df[feature].unique())
+        dataSet = pd.concat([ dataSet, dummies ], axis=1)
+        del dataSet[feature]    
+
+    return dataSet
+
+def pruneColumns(train, final):
+    columnsInTrainButNotFinal = [ column for column in train.columns if column not in final.columns]
+    if LABEL_FIELD in columnsInTrainButNotFinal:
+        columnsInTrainButNotFinal.remove(LABEL_FIELD)
+    train.drop(columnsInTrainButNotFinal, axis=1, inplace=True)
+
+train_df, final_df = map(lambda dataSet: transformDataset(dataSet), [ train_df, final_df ])
+pruneColumns(train_df, final_df)
 
 accuracyScore = 0
 for _ in range(NUM_TESTS):

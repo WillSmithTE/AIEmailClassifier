@@ -5,7 +5,6 @@ def predictionGenerator(train_x, train_y, test_x):
 
 
     for dataSet in [ train_x, test_x ]:
-        dataSet[MAIL_TYPE_FIELD] = dataSet[MAIL_TYPE_FIELD].apply(lambda value: value.lower())
         del dataSet[DATE_FIELD]
         del dataSet[ORG_FIELD]
         del dataSet[MAIL_TYPE_FIELD]
