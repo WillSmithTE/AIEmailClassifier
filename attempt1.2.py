@@ -60,5 +60,3 @@ pred_df = pd.DataFrame(pred_y, columns=['label'])
 pred_df.to_csv("knn_sample_submission", index=True, index_label='Id')
 
 testResults(test_df)
-
-
