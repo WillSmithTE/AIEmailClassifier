@@ -4,17 +4,8 @@ from sklearn.preprocessing import OneHotEncoder
 import pandas as pd
 
 def transformDataset(dataSet):
-#     del dataSet[DATE_FIELD]
-#     dataSet[MAIL_TYPE_FIELD] = dataSet[MAIL_TYPE_FIELD].apply(lambda value: value.lower())
     if LABEL_FIELD in dataSet.columns:
         del dataSet[LABEL_FIELD]
-
-#     for feature in [ ORG_FIELD, MAIL_TYPE_FIELD, TLD_FIELD]:
-#         dataSet[feature] = pd.Categorical(dataSet[feature])
-#         dummies = pd.get_dummies(dataSet[feature], prefix=feature)
-#         dataSet = pd.concat([ dataSet, dummies ], axis=1)
-#         del dataSet[feature]    
-#     # print(dataSet)
 
     return dataSet
 

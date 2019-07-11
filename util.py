@@ -9,3 +9,11 @@ ALL_FIELDS = [ ORG_FIELD, TLD_FIELD, CCS_FIELD, BCCED_FIELD, MAIL_TYPE_FIELD, IM
 def powerset(iterable):
     s = list(iterable)
     return chain.from_iterable(combinations(s, r) for r in range(len(s)))
+
+
+def pruneColumns(train, final):
+    columnsInTrainButNotFinal = [ column for column in train.columns if column not in final.columns]
+    if LABEL_FIELD in columnsInTrainButNotFinal:
+        columnsInTrainButNotFinal.remove(LABEL_FIELD)
+    train.drop(columnsInTrainButNotFinal, axis=1, inplace=True)
+
